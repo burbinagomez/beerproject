@@ -3,11 +3,8 @@ require_once("../Config/Conexion.php");
 
 class LoginModel {
 
-    public function Registrar(string $nombre,string $email,string $pass,$token) {
+    public function Registrar(string $email,string $pass,$nombre,$telefono,$ciudad) {
      
-        $path = '/rascanubes';
-        $protocol = isset($_SERVER["HTTPS"]) ? 'https' : 'http';
-        $default = $protocol."://".$_SERVER['HTTP_HOST'].$path.'/img/usuarios/default.png';
         $return = array();
         try {
             $db=Conectar::conexion();
@@ -28,16 +25,16 @@ class LoginModel {
             } else {
                 $db->query("BEGIN");
                 //creacion de usuario
-                $sql = "INSERT INTO usuarios(`nombre`,`correo`,`password`, `ruta_imagen`,`estado`) VALUES ('" . $nombre."','".$email."','".$pass."','".$default."',2)";
-
+                $sql = "INSERT INTO usuarios(`correo`,`contrasena`,`nombre`,`telefono`,`ciudad`) 
+                VALUES ('".$email."','".$pass."','".$nombre."','".$telefono."','".$ciudad."')";
                 $result1 = $db->query($sql);
                
                 if (!$result1) {
                     $return['id'] = 0;
                     $return['mensaje'] ="Hubo un error inesperado, intentelo de nuevo";
                     $return["status"] = 'error';
-                    $return["flag"] = '0';
-                    $return["token"] = $token;
+                    // $return["flag"] = '0';
+                    // $return["token"] = $token;
                     return $return;
                     //Alguna o las dos consultas han fallado, y le indicamos al motor de la base de datos que restablezca la base de datos tal y como estaba antes de iniciar la transacción
                     $db->query("ROLLBACK");
@@ -114,7 +111,7 @@ class LoginModel {
         //var_dump($data);
     }
 
-    public function login($usuario, $pass,$token) {
+    public function login($usuario, $pass) {
         $return = array();
         $db=Conectar::conexion();
         $sqlCount = "select count(id) as total  from usuarios  where  correo = '" . $usuario . "'";
@@ -124,31 +121,32 @@ class LoginModel {
             $return["status"] = 'error';
             return $return;
         }
-        $sql = "SELECT id, nombre, correo,estado, password,fechaCreacion, cambioContrasena FROM  usuarios  where  correo = '" . $usuario . "'";
+        $sql = "SELECT * FROM  usuarios  where  correo = '" . $usuario . "'";
         $resultadoTotal = $db->query($sql);
         $data["datos"] = array();
         while ($row = $resultadoTotal->fetch_array()) {
             $data["datos"][] = $row;
         }
         if (count($data["datos"]) != 0) {
-            $isPasswordCorrect = password_verify($pass,$data['datos'][0]['password'] );
+            $isPasswordCorrect = password_verify($pass,$data['datos'][0]['contrasena'] );
             if($isPasswordCorrect){
                 loginModel::session($data);
                 $return["status"] = 'ok';
+                $return["mensaje"] = 'Transaccion Correcta';
                 return $return;
             }
             else{
                 $return['mensaje'] ="Correo electrònico y/o contraseña no coinciden.";
                 $return["status"] = 'warnning';
-                $return["flag"] = '0';
-                $return["token"] = $token;
+                // $return["flag"] = '0';
+                // $return["token"] = $token;
                 return $return;
             }
         }else{
             $return['mensaje'] ="Correo electrònico y/o contraseña no coinciden.";
             $return["status"] = 'warnning';
-            $return["flag"] = '0';
-            $return["token"] = $token;
+            // $return["flag"] = '0';
+            // $return["token"] = $token;
             return $return;
         }
         
@@ -159,8 +157,8 @@ class LoginModel {
         $_SESSION['id']=$data['datos'][0]['id'];
         $_SESSION['nombre']=$data['datos'][0]['nombre'];
         $_SESSION['correo']=$data['datos'][0]['correo'];
-		$_SESSION['estado']=$data['datos'][0]['estado'];
-        $_SESSION['cambio']=$data['datos'][0]['cambioContrasena'];
+		// $_SESSION['estado']=$data['datos'][0]['estado'];
+        // $_SESSION['cambio']=$data['datos'][0]['cambioContrasena'];
     }
 
     public function Cerrar() {

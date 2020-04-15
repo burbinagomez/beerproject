@@ -36,23 +36,22 @@ switch ($post['tipo']) {
 }
 
 function Registrar($post){	
-
-	$nombre = $post['nombre'];
-    $email = $post['email'];
-    $token = $post['token'];
-$action = 'login';
+    $nombre=$post['nombre'];
+    $telefono = $post['telefono'];
+    $ciudad = $post['ciudad'];
+	$correo = $post['correo'];
     $pass =  password_hash($post['pass'],PASSWORD_DEFAULT) ;
-    if(captcha($token,$action)){
-        $data = LoginModel::Registrar($nombre,$email,$pass,$token);
+    // if(captcha($token,$action)){
+        $data = LoginModel::Registrar($correo,$pass,$nombre,$telefono,$ciudad);
         echo json_encode($data);
-    }else{
-        $return["status"] = "error";
-    $return["mensaje"] = "Por favor recargue la pagina";
-    $return["id"]="0";
-    $return["token"]=$token;
-    echo json_encode($return);
+    // }else{
+    //     $return["status"] = "error";
+    // $return["mensaje"] = "Por favor recargue la pagina";
+    // $return["id"]="0";
+    // $return["token"]=$token;
+    // echo json_encode($return);
 
-    }
+    // }
     
 
    // var_dump( $data['mensaje']);
@@ -126,21 +125,20 @@ function randomPassword() {
 
 
 function Login($post) {
-    $email = $post['email'];
+    $email = $post['correo'];
     $pass = $post['pass'];
-$token = $post['token'];
-$action = 'login';
 
-if(captcha($token,$action)){
-    $data = LoginModel::login($email, $pass, $token);
+
+// if(captcha($token,$action)){
+    $data = LoginModel::login($email, $pass);
     echo json_encode($data);
-}else{
-    $return["status"] = "error";
-    $return["mensaje"] = "Por favor recargue la pagina";
-    $return["id"]="0";
-    $return["token"]=$token;
-    echo json_encode($return);
-}
+// }else{
+//     $return["status"] = "error";
+//     $return["mensaje"] = "Por favor recargue la pagina";
+//     $return["id"]="0";
+//     $return["token"]=$token;
+//     echo json_encode($return);
+// }
 
  
 }
