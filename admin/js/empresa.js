@@ -68,7 +68,7 @@ function actualizar() {
                 var json = JSON.parse(data);
                 if (json.status == 'ok') {
                     alert(json.mensaje)
-                    location.href = 'admin/empresa.php';
+                    location.href = 'empresa.php';
 
                 } else {
                     alert(json.mensaje);
