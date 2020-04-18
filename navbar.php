@@ -12,7 +12,7 @@
                     </div>
                 </div>
                 <div class="ht-right">
-                    <a href="#" class="login-panel"><i class="fa fa-user"></i>Login</a>
+                    <a href="login.php" class="login-panel"><i class="fa fa-user"></i>Login</a>
                     <div class="lan-selector">
                         <select class="language_drop" name="countries" id="countries" style="width:300px;">
                             <option value='yt' data-image="img/flag-1.jpg" data-imagecss="flag yt"
@@ -111,7 +111,7 @@
         </div>
         <div class="nav-item">
             <div class="container">
-                <div class="nav-depart">
+                <!-- <div class="nav-depart">
                     <div class="depart-btn">
                         <i class="ti-menu"></i>
                         <span>All departments</span>
@@ -126,17 +126,17 @@
                             <li><a href="#">Brand Outdoor Apparel</a></li>
                         </ul>
                     </div>
-                </div>
+                </div> -->
                 <nav class="nav-menu mobile-menu">
                     <ul>
                         <li class="active"><a href="./index.php">Home</a></li>
                         <li><a href="./shop.php">Shop</a></li>
-                        <li><a href="#">Collection</a>
-                            <ul class="dropdown">
+                        <li><a href="cervecerias.php">Cervecerias</a>
+                            <!-- <ul class="dropdown">
                                 <li><a href="#">Men's</a></li>
                                 <li><a href="#">Women's</a></li>
                                 <li><a href="#">Kid's</a></li>
-                            </ul>
+                            </ul> -->
                         </li>
                         <li><a href="./blog.php">Blog</a></li>
                         <li><a href="./contact.php">Contact</a></li>

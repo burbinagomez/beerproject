@@ -54,10 +54,19 @@
                                 Productos
                             </a>
                         </li>
-                        
+
                     </ul>
                 </li>
 
+                <li class="app-sidebar__heading">Empresa</li>
+                <li>
+                    <a href="empresa.php">
+                        <i class="metismenu-icon pe-7s-diamond"></i>
+                        Informacion Basica
+
+                    </a>
+                  
+                </li>
             </ul>
         </div>
     </div>
